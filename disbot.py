@@ -55,15 +55,19 @@ async def on_message(message):
 		file = openpyxl.load_workbook('data.xlsx')
 		sheet = file.active
 		learn = message.content.split(' ')
-		for i in range(1,257):
-			if sheet['A'+str(i)].value == '-' or sheet['A'+str(i)].value == learn[1]:
-				sheet['A'+str(i)].value = learn[1]
-				sheet['B'+str(i)].value = learn[2]
-				await client.send_message(message.channel, '알았어 이제부터 '+str(learn[1])+'은(는) '+str(learn[2])+'이야')
-				break
-			if i == 256:
-				await client.send_message(message.channel, '과부하! (최대 256단어)')
-		file.save('data.xlsx')
+		hmm = random.randint(1,6)
+		if not hmm == 5:
+			for i in range(1,257):
+				if sheet['A'+str(i)].value == '-' or sheet['A'+str(i)].value == learn[1]:
+					sheet['A'+str(i)].value = learn[1]
+					sheet['B'+str(i)].value = learn[2]
+					await client.send_message(message.channel, '알았어 이제부터 '+str(learn[1])+'은(는) '+str(learn[2])+'이야')
+					break
+				if i == 256:
+					await client.send_message(message.channel, '과부하! (최대 256단어)')
+			file.save('data.xlsx')
+		else:
+			await client.send_message(message.channel, '싫어')
 
 	if message.content.startswith('ㅃ기억'):
 		file = openpyxl.load_workbook('data.xlsx')
