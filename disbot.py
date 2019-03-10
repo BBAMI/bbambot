@@ -11,7 +11,7 @@ async def on_ready():
 	print('로그인 : '+(client.user.name))
 	print('id : '+(client.user.id))
 	print('------------------------')
-	await client.change_presence(game=discord.Game(name='ㅃ? : 사용법', type=1))
+	await client.change_presence(game=discord.Game(name='개발중이라 ㅃ기억 다름', type=1))
 	
 @client.event
 async def on_message(message):
@@ -22,7 +22,14 @@ async def on_message(message):
 
 	if message.content == ('ㅃ?'):
 		embed = discord.Embed(title="빼미에몽 사용법",
-		description='ㅃ? / ㅃ주사위 / ㅃ뭐할까\nㅃ골라줘 A B C ... \nㅃ적어 A B / ㅃ기억 A\nㅃ러시안룰렛 / ㅃ업다운\n빼미에몽 / 뺌 바보',
+		description='ㅃ주사위 - 1 ~ 6이 나와\n'
+			'ㅃ뭐할까 - 할게없다면 한번 쳐봐\n'
+			'ㅃ골라줘 A B C.. - 선택장애가 올때 써\n'
+			'ㅃ적어 A B / ㅃ기억 A - 기억을 적고 불러와\n'
+			'ㅃ러시안룰렛 - 러시안룰렛 미니게임\n'
+			'ㅃ업다운 - 업다운 미니게임\n'
+			'빼미에몽 / 뺌 바보 - 대답을 해줘\n\n'
+			'똥겜몬 도움 - 똥겜몬 명령어 사용법',
 		color=0x00ff00)
 		await client.send_message(message.channel, embed=embed)
 
@@ -112,15 +119,15 @@ async def on_message(message):
 		if sheet['A'+str(2)].value == 0:
 			sheet['A'+str(2)].value = random.randint(1,100)
 			sheet['B'+str(2)].value = 0
-			await client.send_message(message.channel, '업다운을 시작했어 !ㅃ1~100중에 불러 기회는 7회야')
+			await client.send_message(message.channel, '업다운을 시작했어 "업다운 1~100"로 할수있어 기회는 7회야')
 		else:
 			await client.send_message(message.channel, '아직 진행중이야')
 		file.save('rr.xlsx')
 
-	if message.content.startswith('!'):
+	if message.content.startswith('업다운'):
 		file = openpyxl.load_workbook('rr.xlsx')
 		sheet = file.active
-		number = message.content.split('ㅃ')
+		number = message.content.split(' ')
 		if not int(sheet['A'+str(2)].value) == 0:
 			sheet['B'+str(2)].value += 1
 			if int(sheet['A'+str(2)].value) == int(number[1]):
@@ -133,12 +140,22 @@ async def on_message(message):
 				else:
 					await client.send_message(message.channel, '업 '+str(7-sheet['B'+str(2)].value)+'번 남았어')
 				if sheet['B'+str(2)].value == 7:
-					await client.send_message(message.channel, '끝났네 답은 '+str(sheet['A'+str(2)].value)+'인데 바보~')
+					await client.send_message(message.channel, '끝났네 답은 '+str(sheet['A'+str(2)].value)+'인데 멍청이')
 			file.save('rr.xlsx')
 
 #--------------(똥겜몬)------------------------------------------------------------------
+	if message.content.startswith('똥겜몬 도움') or message.content.startswith('ㄸ 도움'):
+		embed = discord.Embed(title= '똥겜몬 명령어 모음',
+		description= '똥겜몬 생성 - 아이디를 똥겜몬에 등록\n'
+			'똥겜몬 인벤 - 똥가루와 뽑기 보유수를 확인\n'
+			'똥겜몬 뽑기 등급 N - 보유한 뽑기를 N번 사용\n'
+			'똥겜몬 재조합 N - 똥가루 50개 >> 랜덤 뽑기 1개\n'
+			'똥겜몬 -> ㄸ로 축약 가능\n'
+			, color=0x00ff00)
+		embed.set_footer(text= '개발에 참여하고 싶다면 -> http://bitly.kr/8TrYH')
+		await client.send_message(message.channel, embed=embed)
 
-	if message.content.startswith('똥겜몬 생성'):
+	if message.content.startswith('똥겜몬 생성') or message.content.startswith('ㄸ 생성'):
 		file = openpyxl.load_workbook('dg_user.xlsx')
 		sheet = file.active
 		for i in range(1,257):
@@ -151,12 +168,12 @@ async def on_message(message):
 					file.save('dg_user.xlsx')
 					file = openpyxl.load_workbook('dg_user_inv.xlsx')
 					sheet = file.active
-					sheet['B'+str(i)].value = 5
+					sheet['C'+str(i)].value = 5
 					file.save('dg_user_inv.xlsx')
 					await client.send_message(message.channel, '생성 완료! C급 뽑기 5개도 지급했어')
 					break
 
-	if message.content.startswith('똥겜몬 인벤'):
+	if message.content.startswith('똥겜몬 인벤') or message.content.startswith('ㄸ 인벤'):
 		file = openpyxl.load_workbook('dg_user.xlsx')
 		sheet = file.active
 		for i in range(1,257):
@@ -165,57 +182,122 @@ async def on_message(message):
 				sheet = file.active
 				embed = discord.Embed(title= str(message.author.name)+'의 똥겜몬 인벤토리',
 				description= '마법의 똥가루 : '+str(sheet['A'+str(i)].value)+'개\n'
-					'C급 뽑기 : '+str(sheet['B'+str(i)].value)+'개\n' 
-					'B급 뽑기 : '+str(sheet['C'+str(i)].value)+'개\n'
-					'뽑기 하는법 ex) 똥겜몬 뽑기 C 3 : C급 뽑기 3번'
+					'랜덤 뽑기 : '+str(sheet['F'+str(i)].value)+'개\n'
+					'C급 뽑기 : '+str(sheet['C'+str(i)].value)+'개\n'
 				, color=0x00ff00)
+				embed.set_footer(text= 'ex) 똥겜몬 뽑기 C 3 (C급 뽑기 3회)')
 				await client.send_message(message.channel, embed=embed)
 				break
 		else:
 			await client.send_message(message.channel, '먼저 "똥겜몬 생성"으로 계정을 만들어')
 
-	if message.content.startswith('똥겜몬 뽑기'):
+	if message.content.startswith('똥겜몬 뽑기') or message.content.startswith('ㄸ 뽑기'):
 		memory = message.content.split(' ')
 		file3 = openpyxl.load_workbook('dg_user.xlsx')
 		sheet3 = file3.active
 		for i in range(1,257):
 			if sheet3['A'+str(i)].value == id:
-				idd = i
+				uid = i #uid : 유저 아이디 위치
 				file4 = openpyxl.load_workbook('dg_user_inv.xlsx')
 				sheet4 = file4.active
-				if memory[2] == 'C':
-					if str(memory[3]) <= str(sheet4['B'+str(i)].value):
-						sheet4['B'+str(i)].value = int(sheet4['B'+str(i)].value) - int(memory[3])
-						file = openpyxl.load_workbook('dg_mons.xlsx')
-						sheet = file.active
-						file2 = openpyxl.load_workbook('dg_user_mons.xlsx')
-						sheet2 = file2.active
-						roll = []
-						choice = []
-						for i in range(1,257):
-							if sheet['A'+str(i)].value == str('C'):
+				if memory[2] == 'D': #등급 확인
+					rank_lo = 'B'
+				elif memory[2] == 'C':
+					rank_lo = 'C'
+				elif memory[2] == 'B':
+					rank_lo = 'D'
+				elif memory[2] == 'A':
+					rank_lo = 'E'
+				elif memory[2] == '랜덤':
+					rank_lo = 'F'
+				else:
+					await client.send_message(message.channel, '똥겜몬 뽑기 <등급> <N> 으로 다시해봐')
+					break
+				rank = memory[2]
+					
+				if int(memory[3]) <= int(sheet4[str(rank_lo)+str(uid)].value): #수량이 있는지 확인
+					sheet4[str(rank_lo)+str(i)].value -= int(memory[3]) #인벤에서 수량만큼 차감
+					file = openpyxl.load_workbook('dg_mons.xlsx') #똥겜몬 도감번호
+					sheet = file.active
+					file2 = openpyxl.load_workbook('dg_user_mons.xlsx') #유저의 똥겜몬 보유현황
+					sheet2 = file2.active
+					roll = []
+					if not memory[2] == '랜덤':
+						for i in range(1,257): #도감에서 같은 등급만 걸러내는 작업
+							if sheet['A'+str(i)].value == str(rank):
 								roll.append(i)
-						for i in range(1,int(memory[3])+1):
-							choice.append(random.choice(roll))
-						await client.send_message(message.channel, str(message.author.name)+'의 뽑기 결과!')
-						for i in range(0,len(choice)):
-							if sheet2.cell(idd,i+4).value == 1:
-								sheet4['A'+str(i+1)].value += 50
-								await client.send_message(message.channel, str(sheet['A'+str(choice[i])].value)+'등급 '+str(sheet['B'+str(choice[i])].value)+' (보유중이라 마법의 똥가루 50개로 대체)')
+						for i in range(1,int(memory[3])+1): #걸러낸 C등급에서 랜덤뽑기
+							choice = random.choice(roll)
+							if sheet2.cell(uid,choice+3).value == 1:
+								if sheet['A'+str(choice)].value == 'B':
+									dust = 50
+								elif sheet['A'+str(choice)].value == 'A':
+									dust = 250
+								else:
+									dust = 10
+								sheet4['A'+str(uid)].value += dust
+								await client.send_message(message.channel, str(sheet['A'+str(choice)].value)+'등급 '+str(sheet['B'+str(choice)].value)+'! -> 똥가루 '+str(dust)+'개')
 							else:
-								sheet2.cell(idd,i+4).value = 1
-								await client.send_message(message.channel, str(sheet['A'+str(choice[i])].value)+'등급 '+str(sheet['B'+str(choice[i])].value)+'!')
+								sheet2.cell(uid,choice+3).value = 1
+								await client.send_message(message.channel, str(sheet['A'+str(choice)].value)+'등급 '+str(sheet['B'+str(choice)].value)+'!')
 							file2.save('dg_user_mons.xlsx')
 							file4.save('dg_user_inv.xlsx')
 						break
 					else:
-						await client.send_message(message.channel, '그만큼 가지고 있는지 다시 확인해볼래?')
+						for i in range(1,int(memory[3])+1): #랜덤 뽑기의 등급을 설정
+							rand = random.random()*100
+							if rand < 1.5:
+								rank = 'A'
+							elif rand < 13:
+								rank = 'B'
+							elif rand < 85:
+								rank = 'C'
+							else:
+								rank = 'D'
+							roll = []
+							for i in range(1,257): #설정된 등급에 맞는것들 모으기
+								if sheet['A'+str(i)].value == str(rank):
+									roll.append(i)
+
+							choice = random.choice(roll) #모은것들 중 하나 뽑기
+							if sheet2.cell(uid,choice+3).value == 1:
+								if sheet['A'+str(choice)].value == 'B':
+									dust = 50
+								elif sheet['A'+str(choice)].value == 'A':
+									dust = 250
+								else:
+									dust = 10
+								sheet4['A'+str(uid)].value += dust
+								await client.send_message(message.channel, str(sheet['A'+str(choice)].value)+'등급 '+str(sheet['B'+str(choice)].value)+'! -> 똥가루 '+str(dust)+'개')
+							else:
+								sheet2.cell(uid,choice+3).value = 1
+								await client.send_message(message.channel, str(sheet['A'+str(choice)].value)+'등급 '+str(sheet['B'+str(choice)].value)+'!')
+							file2.save('dg_user_mons.xlsx')
+							file4.save('dg_user_inv.xlsx')
 						break
 				else:
-					await client.send_message(message.channel, '제대로 입력해줘')
+					await client.send_message(message.channel, '그만큼 가지고 있는지 다시 확인해봐')
 					break
 		else:
 			await client.send_message(message.channel, '먼저 "똥겜몬 생성"으로 계정을 만들어')
+
+	if message.content.startswith('똥겜몬 재조합') or message.content.startswith('ㄸ 재조합'):
+		command = message.content.split(' ')
+		file = openpyxl.load_workbook('dg_user.xlsx')
+		sheet = file.active
+		for i in range(1,257):
+			if sheet['A'+str(i)].value == id:
+				file2 = openpyxl.load_workbook('dg_user_inv.xlsx')
+				sheet2 = file2.active
+				if sheet2.cell(i,1).value >= int(command[2])*50:
+					sheet2.cell(i,1).value -= int(command[2])*50
+					sheet2.cell(i,6).value += int(command[2])
+					await client.send_message(message.channel, '랜덤 뽑기를 '+str(command[2])+'개 만들었어')
+					file2.save('dg_user_inv.xlsx')
+					break
+				else:
+					await client.send_message(message.channel, '재조합은 1회에 똥가루 50개야')
+					break
 
 
 access_token = os.environ["BOT_TOKEN"]
