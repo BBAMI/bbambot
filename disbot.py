@@ -11,15 +11,6 @@ async def on_ready():
 	print('로그인 : '+(client.user.name))
 	print('id : '+(client.user.id))
 	print('------------------------')
-	await client.change_presence(game=discord.Game(name='개발중이라 ㅃ기억 다름', type=1))
-	
-client = discord.Client()
-
-@client.event
-async def on_ready():
-	print('로그인 : '+(client.user.name))
-	print('id : '+(client.user.id))
-	print('------------------------')
 	await client.change_presence(game=discord.Game(name='<뺌 도움> = 사용법', type=1))
 	
 @client.event
@@ -36,21 +27,21 @@ async def on_message(message):
 			'뺌 <할말> - 빼미에몽 : <대답>\n'
 			'뺌 러시안 - 러시안룰렛 미니게임\n'
 			'뺌 업다운 - 업다운 미니게임\n'
+			'뺌 화공 - 현재있는 음성채널의 화면공유를 링크해줘'
 			'빼미에몽 - 대답을 해줘'
 		,color=0x00ff00)
-		embed.set_footer(text= '떵겜몬 도움 - 떵겜몬 명령어 사용법')
+		#embed.set_footer(text= '떵겜몬 도움 - 떵겜몬 명령어 사용법')
 		await client.send_message(message.channel, embed=embed)
 	elif message.content.startswith('뺌 골라줘'):
 		choice = message.content.split(' ')
-		choicenumber = random.randint(1, len(choice)-1)
+		choicenumber = random.randint(2, len(choice))
 		choiceresult = choice[choicenumber]
 		await client.send_message(message.channel, str(choiceresult)+'이(가) 좋겠네')
-	elif message.content.startswith('빼미에몽'):
-		dosome = '왜,ㅖ,머,?,왜불러 할일이 그렇게 없어?'
-		dosomechoice = dosome.split(',')
-		dosomenumber = random.randint(1, len(dosomechoice)-1)
-		dosomeresult = dosomechoice[dosomenumber]
-		await client.send_message(message.channel, dosomeresult)
+	elif message.content.startswith('뺌 화공'):
+		if not message.author.voice.voice_channel == None:
+			await client.send_message(message.channel, 'https://discordapp.com/channels/'+str(message.server.id)+'/'+str(message.author.voice.voice_channel.id))
+		else:
+			await client.send_message(message.channel, '먼저 음성채널에 들어가')
 	elif message.content.startswith('뺌 배워') or message.content.startswith('빼미에몽님 배워주세요'):
 		file = openpyxl.load_workbook('data.xlsx')
 		sheet = file.active
@@ -71,6 +62,12 @@ async def on_message(message):
 			file.save('data.xlsx')
 		else:
 			await client.send_message(message.channel, '싫은데? 빼미에몽님 배워주세요 라고 해봐')
+	elif message.content.startswith('빼미에몽'):
+		dosome = '왜,ㅖ,머,?,왜불러 할일이 그렇게 없어?'
+		dosomechoice = dosome.split(',')
+		dosomenumber = random.randint(1, len(dosomechoice)-1)
+		dosomeresult = dosomechoice[dosomenumber]
+		await client.send_message(message.channel, dosomeresult)
 	elif message.content.startswith('뺌 러시안'):
 		file = openpyxl.load_workbook('rr.xlsx')
 		sheet = file.active
@@ -142,6 +139,7 @@ async def on_message(message):
 
 
 #--------------(떵겜몬)------------------------------------------------------------------
+'''
 	if message.content.startswith('떵겜몬 도움') or message.content.startswith('ㄸ 도움'):
 		embed = discord.Embed(title= '떵겜몬 명령어 모음',
 		description= '떵겜몬 생성 - 아이디를 떵겜몬에 등록\n'
@@ -296,6 +294,7 @@ async def on_message(message):
 				else:
 					await client.send_message(message.channel, '재조합은 1회에 똥가루 50개야')
 					break
+'''
 
 
 access_token = os.environ["BOT_TOKEN"]
