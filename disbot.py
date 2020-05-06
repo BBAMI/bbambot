@@ -37,9 +37,10 @@ async def on_message(message):
 		await client.send_message(message.channel, str(choiceresult)+'이(가) 좋겠네')
 	elif message.content.startswith('뺌 감타디'):
 		embed = discord.Embed(title="감자타워디펜스",
-		description='다운로드 : https://drive.google.com/open?id=1DnK0sVyWlgp-MFNESsVNx5ZzyEq9l2EZ'
-            '\n룰북 / 패치노트 : https://docs.google.com/spreadsheets/d/1xFTxiUZmJRuARkA7m-pHlYFo97Y0liyCdZbbPofazDM/edit?usp=sharing'
+		description='다운로드\nhttps://drive.google.com/open?id=1DnK0sVyWlgp-MFNESsVNx5ZzyEq9l2EZ\n'
+            '룰북 + 패치노트\nhttps://docs.google.com/spreadsheets/d/1xFTxiUZmJRuARkA7m-pHlYFo97Y0liyCdZbbPofazDM/edit?usp=sharing'
         ,color=0xff7f00)
+		embed.set_footer(text= '윈도우에서 파일실행을 막을 수 있으나 문제없는 파일입니다.')
 		await client.send_message(message.channel, embed=embed)
 	elif message.content.startswith('빼미에몽님 배워주세요'):
 		await client.send_message(message.channel, '하란다고 하네 ㅋㅋ')
