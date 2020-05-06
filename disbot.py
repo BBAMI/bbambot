@@ -16,19 +16,18 @@ async def on_ready():
 @client.event
 async def on_message(message):
 	id = message.author.id
-
+    
 	if message.author.bot:
 		return None
-#---------------------(간단한 명령어 기능)--------------------------
-	if message.content == ('뺌 도움'):
+	if message.content.startswith('뺌 도움'):
 		embed = discord.Embed(title="빼미에몽 사용법",
 		description='뺌 골라줘 A B C.. - 선택장애가 올때 써\n'
-			'뺌 배워 <할말> <대답> - 말을 가르쳐\n'
-			'뺌 <할말> - 빼미에몽 : <대답>\n'
+            '뺌 배워 <할말> <대답> - 말을 가르쳐\n'
+            '뺌 <할말> - 빼미에몽 : <대답>\n'
             '뺌 감타디 - 감자타워디펜스 다운로드\n'
-			'뺌 러시안 - 러시안룰렛 미니게임\n'
-			'뺌 업다운 - 업다운 미니게임\n'
-			'빼미에몽 - 대답을 해줘'
+            '뺌 러시안 - 러시안룰렛 미니게임\n'
+            '뺌 업다운 - 업다운 미니게임\n'
+            '빼미에몽 - 대답을 해줘'
 		,color=0x00ff00)
 		await client.send_message(message.channel, embed=embed)
 	elif message.content.startswith('뺌 골라줘'):
@@ -37,9 +36,9 @@ async def on_message(message):
 		choiceresult = choice[choicenumber]
 		await client.send_message(message.channel, str(choiceresult)+'이(가) 좋겠네')
     elif message.content.startswith('뺌 감타디'):
-		await client.send_message(message.channel, '다운로드 : https://drive.google.com/file/d/1DnK0sVyWlgp-MFNESsVNx5ZzyEq9l2EZ/view?usp=sharing\n'
-                                                    '룰북 / 패치노트 : https://docs.google.com/spreadsheets/d/1xFTxiUZmJRuARkA7m-pHlYFo97Y0liyCdZbbPofazDM/edit?usp=sharing')
-	elif message.content.startswith('뺌 배워') or message.content.startswith('빼미에몽님 배워주세요'):
+		await client.send_message(message.channel, '다운로드 : https://drive.google.com/file/d/1DnK0sVyWlgp-MFNESsVNx5ZzyEq9l2EZ/view?usp=sharing'
+                                                '\n룰북 / 패치노트 : https://docs.google.com/spreadsheets/d/1xFTxiUZmJRuARkA7m-pHlYFo97Y0liyCdZbbPofazDM/edit?usp=sharing')
+	elif message.content.startswith('뺌 배워'):
 		file = openpyxl.load_workbook('data.xlsx')
 		sheet = file.active
 		learn = message.content.split(' ')
@@ -59,6 +58,8 @@ async def on_message(message):
 			file.save('data.xlsx')
 		else:
 			await client.send_message(message.channel, '싫은데? 빼미에몽님 배워주세요 라고 해봐')
+    elif message.content.startswith('빼미에몽님 배워주세요'):
+        await client.send_message(message.channel, 'ㅋㅋ 하란다고 진짜하네')
 	elif message.content.startswith('빼미에몽'):
 		dosome = '왜,ㅖ,머,?,왜불러 할일이 그렇게 없어?'
 		dosomechoice = dosome.split(',')
