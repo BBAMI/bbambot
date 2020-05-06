@@ -11,7 +11,7 @@ async def on_ready():
 	print('로그인 : '+(client.user.name))
 	print('id : '+(client.user.id))
 	print('------------------------')
-	await client.change_presence(game=discord.Game(name='<뺌 도움> = 사용법', type=1))
+	await client.change_presence(game=discord.Game(name='뺌 도움 <- 사용법', type=1))
 	
 @client.event
 async def on_message(message):
@@ -19,7 +19,7 @@ async def on_message(message):
 
 	if message.author.bot:
 		return None
-	if message.content == ('뺌 도움'):
+	if message.content.startswith('뺌 도움'):
 		embed = discord.Embed(title="빼미에몽 사용법",
 		description='뺌 골라줘 A B C.. - 선택장애가 올때 써\n'
 			'뺌 배워 <할말> <대답> - 말을 가르쳐\n'
@@ -36,8 +36,11 @@ async def on_message(message):
 		choiceresult = choice[choicenumber]
 		await client.send_message(message.channel, str(choiceresult)+'이(가) 좋겠네')
 	elif message.content.startswith('뺌 감타디'):
-		await client.send_message(message.channel, '다운로드 : https://drive.google.com/open?id=1DnK0sVyWlgp-MFNESsVNx5ZzyEq9l2EZ'
-        '\n룰북 / 패치노트 : https://docs.google.com/spreadsheets/d/1xFTxiUZmJRuARkA7m-pHlYFo97Y0liyCdZbbPofazDM/edit?usp=sharing')
+		embed = discord.Embed(title="감자타워디펜스",
+		description='다운로드 : https://drive.google.com/open?id=1DnK0sVyWlgp-MFNESsVNx5ZzyEq9l2EZ'
+            '\n룰북 / 패치노트 : https://docs.google.com/spreadsheets/d/1xFTxiUZmJRuARkA7m-pHlYFo97Y0liyCdZbbPofazDM/edit?usp=sharing'
+        ,color=0xff7f00)
+		await client.send_message(message.channel, embed=embed)
 	elif message.content.startswith('빼미에몽님 배워주세요'):
 		await client.send_message(message.channel, '하란다고 하네 ㅋㅋ')
 	elif message.content.startswith('뺌 배워'):
