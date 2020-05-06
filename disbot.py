@@ -30,8 +30,9 @@ async def on_message(message):
 			'빼미에몽 - 대답을 해줘'
 		,color=0x00ff00)
 		await client.send_message(message.channel, embed=embed)
-    elif message.content.startswith('뺌 감타디'):
-        await client.send_message(message.channel, '다운로드 : https://drive.google.com/open?id=1DnK0sVyWlgp-MFNESsVNx5ZzyEq9l2EZ')
+	elif message.content.startswith('뺌 감타디'):
+		await client.send_message(message.channel, '다운로드 : https://drive.google.com/open?id=1DnK0sVyWlgp-MFNESsVNx5ZzyEq9l2EZ'
+        '\n룰북 / 패치노트 : https://docs.google.com/spreadsheets/d/1xFTxiUZmJRuARkA7m-pHlYFo97Y0liyCdZbbPofazDM/edit?usp=sharing')
 	elif message.content.startswith('뺌 골라줘'):
 		choice = message.content.split(' ')
 		choicenumber = random.randint(2, len(choice))
@@ -57,6 +58,8 @@ async def on_message(message):
 			file.save('data.xlsx')
 		else:
 			await client.send_message(message.channel, '싫은데? 빼미에몽님 배워주세요 라고 해봐')
+	elif message.content.startswith('빼미에몽님 배워주세요')
+		await client.send_message(message.channel, '하란다고 하네 ㅋㅋ')
 	elif message.content.startswith('빼미에몽'):
 		dosome = '왜,ㅖ,머,?,왜불러 할일이 그렇게 없어?'
 		dosomechoice = dosome.split(',')
