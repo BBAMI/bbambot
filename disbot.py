@@ -24,17 +24,20 @@ async def on_message(message):
 		description='뺌 골라줘 A B C.. - 선택장애가 올때 써\n'
 			'뺌 배워 <할말> <대답> - 말을 가르쳐\n'
 			'뺌 <할말> - 빼미에몽 : <대답>\n'
+            '뺌 감타디 - 감자타워디펜스 다운로드링크\n'
 			'뺌 러시안 - 러시안룰렛 미니게임\n'
 			'뺌 업다운 - 업다운 미니게임\n'
 			'빼미에몽 - 대답을 해줘'
 		,color=0x00ff00)
 		await client.send_message(message.channel, embed=embed)
+    elif message.content.startswith('뺌 감타디'):
+        await client.send_message(message.channel, '다운로드 : https://drive.google.com/open?id=1DnK0sVyWlgp-MFNESsVNx5ZzyEq9l2EZ')
 	elif message.content.startswith('뺌 골라줘'):
 		choice = message.content.split(' ')
 		choicenumber = random.randint(2, len(choice))
 		choiceresult = choice[choicenumber]
 		await client.send_message(message.channel, str(choiceresult)+'이(가) 좋겠네')
-	elif message.content.startswith('뺌 배워') or message.content.startswith('빼미에몽님 배워주세요'):
+	elif message.content.startswith('뺌 배워')
 		file = openpyxl.load_workbook('data.xlsx')
 		sheet = file.active
 		learn = message.content.split(' ')
