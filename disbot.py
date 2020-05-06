@@ -36,11 +36,6 @@ async def on_message(message):
 		choicenumber = random.randint(2, len(choice))
 		choiceresult = choice[choicenumber]
 		await client.send_message(message.channel, str(choiceresult)+'이(가) 좋겠네')
-	#elif message.content.startswith('뺌 화공'):
-	#	if not message.author.voice.voice_channel == None:
-	#		await client.send_message(message.channel, 'https://discordapp.com/channels/'+str(message.server.id)+'/'+str(message.author.voice.voice_channel.id))
-	#	else:
-	#		await client.send_message(message.channel, '먼저 음성채널에 들어가')
     elif message.content.startswith('뺌 감타디'):
 		await client.send_message(message.channel, '다운로드 : https://drive.google.com/file/d/1DnK0sVyWlgp-MFNESsVNx5ZzyEq9l2EZ/view?usp=sharing\n'
                                                     '룰북 / 패치노트 : https://docs.google.com/spreadsheets/d/1xFTxiUZmJRuARkA7m-pHlYFo97Y0liyCdZbbPofazDM/edit?usp=sharing')
