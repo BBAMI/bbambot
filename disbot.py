@@ -35,7 +35,12 @@ async def on_message(message):
 		choicenumber = random.randint(2, len(choice))
 		choiceresult = choice[choicenumber]
 		await client.send_message(message.channel, str(choiceresult)+'이(가) 좋겠네')
-	elif message.content.startswith('뺌 배워')
+	elif message.content.startswith('뺌 감타디'):
+		await client.send_message(message.channel, '다운로드 : https://drive.google.com/open?id=1DnK0sVyWlgp-MFNESsVNx5ZzyEq9l2EZ'
+        '\n룰북 / 패치노트 : https://docs.google.com/spreadsheets/d/1xFTxiUZmJRuARkA7m-pHlYFo97Y0liyCdZbbPofazDM/edit?usp=sharing')
+	elif message.content.startswith('빼미에몽님 배워주세요'):
+		await client.send_message(message.channel, '하란다고 하네 ㅋㅋ')
+	elif message.content.startswith('뺌 배워'):
 		file = openpyxl.load_workbook('data.xlsx')
 		sheet = file.active
 		learn = message.content.split(' ')
