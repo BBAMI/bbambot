@@ -120,8 +120,6 @@ async def on_message(message):
 					await client.send_message(message.channel, '끝났네 답은 '+str(sheet['A'+str(2)].value)+'인데 멍청이')
 			file.save('rr.xlsx')
     elif message.content.startswith('뺌 주사위'):
-        number = message.content.split(' ')
-            sheet['A'+str(1)].value = random.randint(1,6)
 		await client.send_message(message.channel, '<@'+id+'>의 주사위 : '+random.randint(1,200))
 	elif message.content.startswith('뺌'):
 		file = openpyxl.load_workbook('data.xlsx')
