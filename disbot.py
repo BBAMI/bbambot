@@ -21,16 +21,17 @@ async def on_message(message):
 		return None
 	if message.content.startswith('뺌 도움'):
 		embed = discord.Embed(title="빼미에몽 사용법",
-		description='뺌 골라줘 A B C.. - 선택장애가 올때 써\n'
+		description='뺌 골라 A B C..\n'
 			'뺌 배워 <할말> <대답> - 말을 가르쳐\n'
 			'뺌 <할말> - 빼미에몽 : <대답>\n'
             '뺌 감타디 - 감자타워디펜스 다운로드링크\n'
 			'뺌 러시안 - 러시안룰렛 미니게임\n'
 			'뺌 업다운 - 업다운 미니게임\n'
+            '뺌 주사위(1~200)\n'
 			'빼미에몽 - 대답을 해줘'
 		,color=0x00ff00)
 		await client.send_message(message.channel, embed=embed)
-	elif message.content.startswith('뺌 골라줘'):
+	elif message.content.startswith('뺌 골라'):
 		choice = message.content.split(' ')
 		choicenumber = random.randint(2, len(choice))
 		choiceresult = choice[choicenumber]
@@ -118,6 +119,10 @@ async def on_message(message):
 				if sheet['B'+str(2)].value == 7:
 					await client.send_message(message.channel, '끝났네 답은 '+str(sheet['A'+str(2)].value)+'인데 멍청이')
 			file.save('rr.xlsx')
+    elif message.content.startswith('뺌 주사위'):
+        number = message.content.split(' ')
+            sheet['A'+str(1)].value = random.randint(1,6)
+		await client.send_message(message.channel, '<@'+id+'>의 주사위 : '+random.randint(1,200))
 	elif message.content.startswith('뺌'):
 		file = openpyxl.load_workbook('data.xlsx')
 		sheet = file.active
