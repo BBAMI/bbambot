@@ -36,9 +36,6 @@ async def on_message(message):
 		choicenumber = random.randint(2,len(choice))
 		choiceresult = choice[choicenumber]
 		await client.send_message(message.channel, str(choiceresult)+'이(가) 좋겠네')
-    elif message.content.startswith('뺌 주사위'):
-        dice = (random.randiant(1,200))
-        await client.send_message(message.channel, str(dice))
 	elif message.content.startswith('뺌 감타디'):
 		embed = discord.Embed(title="감자타워디펜스",
 		description='다운로드 / 룰북 / 패치노트\nhttps://docs.google.com/spreadsheets/d/1xFTxiUZmJRuARkA7m-pHlYFo97Y0liyCdZbbPofazDM/edit?usp=sharing'
