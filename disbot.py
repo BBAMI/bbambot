@@ -33,9 +33,11 @@ async def on_message(message):
 		await client.send_message(message.channel, embed=embed)
 	elif message.content.startswith('뺌 골라'):
 		choice = message.content.split(' ')
-		choicenumber = random.randint(2, len(choice))
+		choicenumber = random.randint(2,len(choice))
 		choiceresult = choice[choicenumber]
 		await client.send_message(message.channel, str(choiceresult)+'이(가) 좋겠네')
+    elif message.content.startswith('뺌 주사위'):
+        await client.send_message(message.channel, '<@'+id+'>의 주사위 : '+random.randint(1,200))
 	elif message.content.startswith('뺌 감타디'):
 		embed = discord.Embed(title="감자타워디펜스",
 		description='다운로드 / 룰북 / 패치노트\nhttps://docs.google.com/spreadsheets/d/1xFTxiUZmJRuARkA7m-pHlYFo97Y0liyCdZbbPofazDM/edit?usp=sharing'
@@ -119,8 +121,6 @@ async def on_message(message):
 				if sheet['B'+str(2)].value == 7:
 					await client.send_message(message.channel, '끝났네 답은 '+str(sheet['A'+str(2)].value)+'인데 멍청이')
 			file.save('rr.xlsx')
-    elif message.content.startswith('뺌 주사위'):
-		await client.send_message(message.channel, '<@'+id+'>의 주사위 : '+random.randint(1,200))
 	elif message.content.startswith('뺌'):
 		file = openpyxl.load_workbook('data.xlsx')
 		sheet = file.active
