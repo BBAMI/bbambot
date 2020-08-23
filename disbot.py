@@ -11,7 +11,8 @@ async def on_ready():
 	print('로그인 : '+(client.user.name))
 	print('id : '+(client.user.id))
 	print('------------------------')
-	await client.change_presence(game=discord.Game(name='뺌 도움 <- 사용법', type=1))
+	game = discord.Game("뺌 도움: 도움말")
+    await client.change_presence(status=discord.Status.idle, activity=game)
 	
 @client.event
 async def on_message(message):
